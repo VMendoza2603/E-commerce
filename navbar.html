@@ -1,0 +1,57 @@
+<!-- ============================================
+     NÓRD — navbar.html
+     Componente reutilizable. Se carga con
+     loadNavbar() definido en main.js
+     Para marcar la página activa, añade
+     data-page="coleccion" en el <body> de cada HTML
+     ============================================ -->
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast">Añadido al carrito</div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h2>Tu carrito</h2>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="empty-cart" id="emptyCart">
+      <div style="font-size:2.5rem">🛍️</div>
+      <p>Tu carrito está vacío</p>
+    </div>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+    <button class="checkout-btn">Proceder al pago →</button>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="index.html" class="logo">NÓRD</a>
+  <ul class="nav-links">
+    <li><a href="coleccion.html" data-navlink="coleccion">Colección</a></li>
+    <li><a href="novedades.html" data-navlink="novedades">Novedades</a></li>
+    <li><a href="ofertas.html"   data-navlink="ofertas">Ofertas</a></li>
+    <li><a href="acerca.html"    data-navlink="acerca">Acerca</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon" onclick="openCart()">
+      🛒
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <button class="nav-icon">♡</button>
+    <button class="nav-icon">⊙</button>
+  </div>
+</nav>

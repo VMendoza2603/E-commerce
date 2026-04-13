@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NÓRD — Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast">Añadido al carrito</div>
+
+  <!-- CART OVERLAY -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+  <!-- CART DRAWER -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+      <h2>Tu carrito</h2>
+      <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="empty-cart" id="emptyCart">
+        <div style="font-size:2.5rem">🛍️</div>
+        <p>Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">$0.00</span>
+      </div>
+      <button class="checkout-btn">Proceder al pago →</button>
+    </div>
+  </div>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav id="navbar">
+    <a href="#" class="logo">NÓRD</a>
+    <ul class="nav-links">
+       <li><a href="./pages/coleccion.html" data-navlink="coleccion">Colección</a></li>
+      <li><a href="./pages/novedades.html" data-navlink="novedades">Novedades</a></li>
+      <li><a href="./pages/ofertas.html"   data-navlink="ofertas">Ofertas</a></li>
+        <li><a href="./pages/acerca.html"    data-navlink="acerca">Acerca</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-icon" onclick="openCart()">
+        🛒
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="nav-icon">♡</button>
+      <button class="nav-icon">⊙</button>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-label">Nueva Colección 2025</div>
+      <h1 class="hero-title">
+        Diseño que<br>
+        <em>trasciende</em><br>
+        lo ordinario
+      </h1>
+      <p class="hero-sub">Piezas curadas para quienes aprecian la calidad sin compromisos. Materiales premium, estética atemporal.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+          <span>Explorar colección</span>
+        </button>
+        <a href="#" class="btn-ghost">Ver lookbook ↗</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=80" alt="Hero" class="hero-img">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ─── MARQUEE ─── -->
+  <div class="marquee-strip">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+
+  <!-- ─── PRODUCTS ─── -->
+  <section class="products-section" id="products">
+    <div class="section-header">
+      <span class="section-label">Catálogo</span>
+      <h2 class="section-title">Piezas <em>seleccionadas</em></h2>
+    </div>
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-cat="all">Todo</button>
+      <button class="filter-btn" data-cat="ropa">Ropa</button>
+      <button class="filter-btn" data-cat="accesorios">Accesorios</button>
+      <button class="filter-btn" data-cat="calzado">Calzado</button>
+      <button class="filter-btn" data-cat="hogar">Hogar</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- ─── FEATURES ─── -->
+  <div class="features">
+    <div class="features-grid">
+      <div class="feature-item">
+        <span class="feature-icon">✦</span>
+        <div class="feature-title">Envío gratuito</div>
+        <p class="feature-desc">En pedidos mayores a $150. Entrega en 3–5 días hábiles.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">◈</span>
+        <div class="feature-title">Devoluciones fáciles</div>
+        <p class="feature-desc">30 días para cambios o reembolso sin preguntas.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">⬡</span>
+        <div class="feature-title">Calidad garantizada</div>
+        <p class="feature-desc">Materiales premium verificados y certificados.</p>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">◎</span>
+        <div class="feature-title">Soporte 24/7</div>
+        <p class="feature-desc">Atención personalizada en cualquier momento.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── PROMO BANNER ─── -->
+  <div class="promo-banner">
+    <div class="promo-img-col">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=700&q=80" alt="Promo" class="promo-img">
+    </div>
+    <div class="promo-content">
+      <div class="promo-tag">Oferta Especial</div>
+      <h2 class="promo-title">Sale de<br><em>temporada</em><br>hasta 40% off</h2>
+      <p class="promo-desc">Aprovecha nuestra liquidación de fin de temporada. Piezas seleccionadas con descuentos exclusivos por tiempo limitado.</p>
+      <div class="promo-counter">
+        <div class="counter-item">
+          <span class="counter-num" id="c-h">08</span>
+          <span class="counter-label">Horas</span>
+        </div>
+        <span class="counter-sep">:</span>
+        <div class="counter-item">
+          <span class="counter-num" id="c-m">24</span>
+          <span class="counter-label">Minutos</span>
+        </div>
+        <span class="counter-sep">:</span>
+        <div class="counter-item">
+          <span class="counter-num" id="c-s">00</span>
+          <span class="counter-label">Segundos</span>
+        </div>
+      </div>
+      <button class="btn-primary"><span>Ver ofertas</span></button>
+    </div>
+  </div>
+
+  <!-- ─── NEWSLETTER ─── -->
+  <section class="newsletter">
+    <span class="section-label">Comunidad</span>
+    <h2 class="section-title" style="margin-bottom:0.5rem">Únete al <em>círculo</em> NÓRD</h2>
+    <p class="newsletter-sub">Acceso anticipado a nuevas colecciones, descuentos exclusivos y contenido editorial.</p>
+    <div class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="tu@correo.com">
+      <button class="newsletter-submit">Suscribir</button>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">NÓRD</div>
+        <p class="footer-desc">Moda consciente para personas que valoran el diseño atemporal y los materiales de calidad superior.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <ul class="footer-links">
+          <li><a href="#">Novedades</a></li>
+          <li><a href="#">Colección</a></li>
+          <li><a href="#">Ofertas</a></li>
+          <li><a href="#">Lookbook</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul class="footer-links">
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Tallas</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul class="footer-links">
+          <li><a href="#">Acerca de</a></li>
+          <li><a href="#">Sostenibilidad</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Carreras</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 NÓRD. Todos los derechos reservados.</span>
+      <div class="social-links">
+        <a href="#" class="social-link">IG</a>
+        <a href="#" class="social-link">TW</a>
+        <a href="#" class="social-link">PI</a>
+        <a href="#" class="social-link">YT</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
