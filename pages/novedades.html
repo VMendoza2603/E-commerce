@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NÓRD — Novedades</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../pages.css">
+</head>
+<body data-page="novedades">
+
+  <div id="navbar-container"></div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Novedades</span>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero" data-title="NUEVO">
+    <div class="page-hero-inner">
+      <div class="page-hero-label">Recién llegado</div>
+      <h1 class="page-hero-title">Lo más <em>nuevo</em></h1>
+      <p class="page-hero-desc">Las últimas incorporaciones a nuestra colección. Piezas frescas que definen la temporada con elegancia y criterio.</p>
+    </div>
+  </div>
+
+  <!-- FEATURED ARRIVAL -->
+  <div class="page-section" style="padding-top:3rem">
+    <div class="news-featured">
+      <div style="overflow:hidden">
+        <img
+          src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&q=80"
+          alt="Destacado"
+          class="news-featured-img">
+      </div>
+      <div class="news-featured-body">
+        <span class="text-label" style="display:block;margin-bottom:1.5rem">Destacado de la semana</span>
+        <h2 class="text-display" style="margin-bottom:1.25rem">
+          Trench Coat<br><em>Primavera 2025</em>
+        </h2>
+        <div class="prose" style="margin-bottom:2rem">
+          <p>Un clásico reinventado. Corte oversize con caída impecable, botonería dorada y tela de gabardina de algodón 100% orgánico. La pieza que define la temporada.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem">
+          <span style="font-family:var(--font-display);font-size:1.8rem;color:var(--accent)">$299</span>
+          <span class="badge badge-accent">Nuevo</span>
+        </div>
+        <button class="btn-primary" onclick="addToCart(5)"><span>Añadir al carrito</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NUEVOS PRODUCTOS -->
+  <div class="page-section">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem">
+      <div>
+        <span class="section-label">Esta semana</span>
+        <h2 class="section-title" style="margin-top:0.5rem">Llegaron <em>hoy</em></h2>
+      </div>
+      <a href="coleccion.html" class="link-arrow">Ver todo →</a>
+    </div>
+    <div class="products-grid" id="newProductsGrid"></div>
+  </div>
+
+  <!-- EDITORIAL POSTS -->
+  <div class="page-section" style="background:var(--surface);border-top:1px solid var(--border)">
+    <div class="section-header">
+      <span class="section-label">Editorial</span>
+      <h2 class="section-title">Tendencias de <em>temporada</em></h2>
+    </div>
+    <div class="grid-3">
+
+      <div class="editorial-card">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80"
+             alt="Tendencia" class="editorial-card-img">
+        <div class="editorial-card-body">
+          <span class="editorial-card-tag">Estilo</span>
+          <div class="editorial-card-title">El arte del layering en primavera</div>
+          <p class="editorial-card-excerpt">Cómo combinar capas ligeras sin perder la elegancia que caracteriza a NÓRD.</p>
+          <div class="editorial-card-footer">
+            <span>12 Abr 2025</span>
+            <a href="#" class="link-arrow">Leer →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="editorial-card">
+        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80"
+             alt="Colores" class="editorial-card-img">
+        <div class="editorial-card-body">
+          <span class="editorial-card-tag">Color</span>
+          <div class="editorial-card-title">Paleta neutral: el poder del beige</div>
+          <p class="editorial-card-excerpt">Por qué los tonos tierra dominan la temporada y cómo incorporarlos a tu guardarropa.</p>
+          <div class="editorial-card-footer">
+            <span>8 Abr 2025</span>
+            <a href="#" class="link-arrow">Leer →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="editorial-card">
+        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80"
+             alt="Materiales" class="editorial-card-img">
+        <div class="editorial-card-body">
+          <span class="editorial-card-tag">Materiales</span>
+          <div class="editorial-card-title">Lino, algodón orgánico y seda cruda</div>
+          <p class="editorial-card-excerpt">Una guía a los tejidos naturales que protagonizan nuestra nueva colección.</p>
+          <div class="editorial-card-footer">
+            <span>3 Abr 2025</span>
+            <a href="#" class="link-arrow">Leer →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <span class="section-label">No te pierdas nada</span>
+    <h2 class="section-title" style="margin-bottom:0.5rem">Sé el <em>primero</em> en saber</h2>
+    <p class="newsletter-sub">Novedades, lanzamientos exclusivos y acceso anticipado directo a tu correo.</p>
+    <div class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="tu@correo.com">
+      <button class="newsletter-submit">Suscribir</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">NÓRD</div>
+        <p class="footer-desc">Moda consciente para personas que valoran el diseño atemporal y los materiales de calidad superior.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <ul class="footer-links">
+          <li><a href="coleccion.html">Colección</a></li>
+          <li><a href="novedades.html">Novedades</a></li>
+          <li><a href="ofertas.html">Ofertas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul class="footer-links">
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Tallas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul class="footer-links">
+          <li><a href="acerca.html">Acerca de</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 NÓRD. Todos los derechos reservados.</span>
+      <div class="social-links">
+        <a href="#" class="social-link">IG</a>
+        <a href="#" class="social-link">TW</a>
+        <a href="#" class="social-link">PI</a>
+        <a href="#" class="social-link">YT</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Mostrar solo los 4 productos con badge "Nuevo"
+    const newItems = products.filter(p => p.badge === 'Nuevo' || p.id <= 4);
+    renderProductsFromList(newItems.slice(0, 4), 'newProductsGrid');
+  </script>
+</body>
+</html>

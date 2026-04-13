@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NÓRD — Ofertas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../pages.css">
+</head>
+<body data-page="ofertas">
+
+  <div id="navbar-container"></div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Ofertas</span>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero" data-title="SALE">
+    <div class="page-hero-inner">
+      <div class="page-hero-label">Tiempo limitado</div>
+      <h1 class="page-hero-title">Sale de <em>temporada</em></h1>
+      <p class="page-hero-desc">Hasta 40% de descuento en piezas seleccionadas. Calidad NÓRD al alcance de más personas, por tiempo limitado.</p>
+    </div>
+  </div>
+
+  <!-- OFFER BANNER CON COUNTDOWN -->
+  <div class="page-section" style="padding-top:3rem;padding-bottom:0">
+    <div class="offer-banner" style="position:relative;overflow:hidden">
+      <div class="offer-banner-text">
+        <span class="text-label" style="display:block;margin-bottom:1rem">La oferta termina en</span>
+        <div style="display:flex;gap:1.5rem;align-items:center;margin-bottom:1.5rem">
+          <div style="text-align:center">
+            <span class="counter-num" id="c-h" style="font-family:var(--font-display);font-size:3rem;color:var(--accent);display:block;line-height:1">08</span>
+            <span class="counter-label" style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)">Horas</span>
+          </div>
+          <span style="font-size:2.5rem;color:var(--border);line-height:1">:</span>
+          <div style="text-align:center">
+            <span class="counter-num" id="c-m" style="font-family:var(--font-display);font-size:3rem;color:var(--accent);display:block;line-height:1">24</span>
+            <span class="counter-label" style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)">Minutos</span>
+          </div>
+          <span style="font-size:2.5rem;color:var(--border);line-height:1">:</span>
+          <div style="text-align:center">
+            <span class="counter-num" id="c-s" style="font-family:var(--font-display);font-size:3rem;color:var(--accent);display:block;line-height:1">00</span>
+            <span class="counter-label" style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)">Segundos</span>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="document.getElementById('offerGrid').scrollIntoView({behavior:'smooth'})">
+          <span>Ver todas las ofertas</span>
+        </button>
+      </div>
+      <span class="offer-pct">40%</span>
+    </div>
+  </div>
+
+  <!-- DESCUENTOS POR CATEGORÍA -->
+  <div class="page-section">
+    <div class="section-header">
+      <span class="section-label">Descuentos</span>
+      <h2 class="section-title">Por <em>categoría</em></h2>
+    </div>
+    <div class="grid-4" style="margin-bottom:4rem">
+      <div class="stat-block" style="cursor:pointer" onclick="filterOffers('ropa')">
+        <span class="stat-number">30%</span>
+        <span class="stat-label">Ropa</span>
+      </div>
+      <div class="stat-block" style="cursor:pointer" onclick="filterOffers('accesorios')">
+        <span class="stat-number">25%</span>
+        <span class="stat-label">Accesorios</span>
+      </div>
+      <div class="stat-block" style="cursor:pointer" onclick="filterOffers('calzado')">
+        <span class="stat-number">40%</span>
+        <span class="stat-label">Calzado</span>
+      </div>
+      <div class="stat-block" style="cursor:pointer" onclick="filterOffers('hogar')">
+        <span class="stat-number">20%</span>
+        <span class="stat-label">Hogar</span>
+      </div>
+    </div>
+
+    <!-- OFFER PRODUCTS GRID -->
+    <div class="sort-bar">
+      <div class="sort-bar-left">
+        Mostrando productos <strong>en oferta</strong>
+      </div>
+      <div style="display:flex;gap:0.5rem" id="offerFilters">
+        <button class="filter-btn active" data-cat="all" onclick="filterOffers('all')">Todos</button>
+        <button class="filter-btn" data-cat="ropa" onclick="filterOffers('ropa')">Ropa</button>
+        <button class="filter-btn" data-cat="accesorios" onclick="filterOffers('accesorios')">Accesorios</button>
+        <button class="filter-btn" data-cat="calzado" onclick="filterOffers('calzado')">Calzado</button>
+        <button class="filter-btn" data-cat="hogar" onclick="filterOffers('hogar')">Hogar</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="offerGrid"></div>
+  </div>
+
+  <!-- TABLA COMPARATIVA DESCUENTOS -->
+  <div class="page-section" style="background:var(--surface);border-top:1px solid var(--border)">
+    <div class="section-header">
+      <span class="section-label">Resumen</span>
+      <h2 class="section-title">Ahorro <em>detallado</em></h2>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio original</th>
+          <th>Precio oferta</th>
+          <th>Descuento</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="offerTable"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">NÓRD</div>
+        <p class="footer-desc">Moda consciente para personas que valoran el diseño atemporal y los materiales de calidad superior.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <ul class="footer-links">
+          <li><a href="coleccion.html">Colección</a></li>
+          <li><a href="novedades.html">Novedades</a></li>
+          <li><a href="ofertas.html">Ofertas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul class="footer-links">
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Tallas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul class="footer-links">
+          <li><a href="acerca.html">Acerca de</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 NÓRD. Todos los derechos reservados.</span>
+      <div class="social-links">
+        <a href="#" class="social-link">IG</a>
+        <a href="#" class="social-link">TW</a>
+        <a href="#" class="social-link">PI</a>
+        <a href="#" class="social-link">YT</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    tickCountdown();
+    setInterval(tickCountdown, 1000);
+
+    const saleProducts = products.filter(p => p.old !== null);
+
+    function filterOffers(cat) {
+      document.querySelectorAll('#offerFilters .filter-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector(`#offerFilters [data-cat="${cat}"]`);
+      if (btn) btn.classList.add('active');
+
+      const list = cat === 'all' ? saleProducts : saleProducts.filter(p => p.cat === cat);
+      renderProductsFromList(list, 'offerGrid');
+      renderTable(list);
+    }
+
+    function renderTable(list) {
+      const tbody = document.getElementById('offerTable');
+      tbody.innerHTML = list.map(p => {
+        const pct = Math.round((1 - p.price / p.old) * 100);
+        return `
+          <tr>
+            <td>
+              <div style="display:flex;align-items:center;gap:1rem">
+                <img src="${p.img}" style="width:48px;height:56px;object-fit:cover;filter:grayscale(20%)">
+                <span style="font-family:var(--font-display)">${p.name}</span>
+              </div>
+            </td>
+            <td><span style="text-decoration:line-through;color:var(--muted)">$${p.old}</span></td>
+            <td><span style="color:var(--accent);font-weight:500">$${p.price}</span></td>
+            <td><span class="badge badge-danger">-${pct}%</span></td>
+            <td><button class="btn-primary" style="padding:0.5rem 1.25rem" onclick="addToCart(${p.id})"><span>Añadir</span></button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    filterOffers('all');
+  </script>
+</body>
+</html>
