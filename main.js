@@ -30,6 +30,8 @@ async function loadNavbar() {
 
     attachCursorExpand();
     initNavbarScroll();
+    enhanceNavbar();
+    updateCartUI();
   } catch (e) {
     console.warn('Error cargando navbar:', e);
   }
@@ -87,7 +89,7 @@ function buildMarquee() {
 
 /* ─── 03. Products Data ─── */
 const products = [
-  { id: 1, name: 'Blazer Structured', cat: 'ropa', price: 189, old: 249, badge: 'Nuevo', stars: 5, img: 'https://images.unsplash.com/photo-1594938298603-c8148c4e74?w=500&q=80' },
+  { id: 1, name: 'Blazer Structured', cat: 'ropa', price: 189, old: 249, badge: 'Nuevo', stars: 5, img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&q=80' },
   { id: 2, name: 'Bolso Tote Cuero', cat: 'accesorios', price: 229, old: null, badge: null, stars: 5, img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80' },
   { id: 3, name: 'Derby Classic', cat: 'calzado', price: 159, old: 210, badge: 'Sale', stars: 4, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80' },
   { id: 4, name: 'Jarrón Cerámica', cat: 'hogar', price: 89, old: null, badge: null, stars: 5, img: 'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500&q=80' },
@@ -109,8 +111,8 @@ function renderProductCard(p, i) {
         <img src="${p.img}" alt="${p.name}" class="product-img" loading="lazy">
         ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
         <div class="product-actions">
-          <button class="add-cart-btn" onclick="addToCart(${p.id})">+ Añadir</button>
-          <button class="wish-btn">♡</button>
+          <button class="add-cart-btn" onclick="addToCart(${p.id})" aria-label="Añadir ${p.name} al carrito">+ Añadir</button>
+          <button class="wish-btn" aria-label="Añadir ${p.name} a favoritos" aria-pressed="false">♡</button>
         </div>
       </div>
       <div class="product-info">
@@ -145,7 +147,33 @@ function renderProductsFromList(list, gridId = 'productsGrid') {
 }
 
 /* ─── 05. Cart ─── */
-let cart = [];
+// El carrito se guarda en localStorage para conservarlo entre páginas y recargas
+const CART_KEY = 'nord-cart';
+let cart = loadCart();
+
+function loadCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    if (!Array.isArray(saved)) return [];
+    return saved
+      .map(item => {
+        const product = products.find(p => p.id === item.id);
+        const qty = Math.min(Math.max(parseInt(item.qty, 10) || 0, 0), 99);
+        return product && qty > 0 ? { ...product, qty } : null;
+      })
+      .filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart.map(({ id, qty }) => ({ id, qty }))));
+  } catch {
+    /* almacenamiento no disponible: el carrito funciona igual en la sesión */
+  }
+}
 
 function addToCart(id) {
   const product = products.find(p => p.id === id);
@@ -182,6 +210,7 @@ function closeCart() {
 }
 
 function updateCartUI() {
+  saveCart();
   const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
@@ -218,6 +247,104 @@ function updateCartUI() {
   `).join('');
 }
 
+/* ─── 05b. Pago (demo) ─── */
+function openCheckout() {
+  if (cart.length === 0) {
+    showToast('Tu carrito está vacío');
+    return;
+  }
+  let modal = document.getElementById('checkoutModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'checkoutModal';
+    modal.className = 'checkout-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'checkoutTitle');
+    modal.innerHTML = `
+      <div class="checkout-box">
+        <h3 id="checkoutTitle">Finalizar compra</h3>
+        <p>Tienda de demostración: no se realizan cobros reales ni se piden datos de pago.</p>
+        <div class="checkout-methods">
+          <label><input type="radio" name="pay" value="tarjeta" checked> 💳 Tarjeta de crédito o débito</label>
+          <label><input type="radio" name="pay" value="transferencia"> 🏦 Transferencia bancaria</label>
+          <label><input type="radio" name="pay" value="paypal"> 🅿️ PayPal</label>
+        </div>
+        <div class="checkout-actions">
+          <button type="button" class="checkout-cancel" id="checkoutCancel">Cancelar</button>
+          <button type="button" class="checkout-btn" id="checkoutConfirm">Confirmar pedido</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeCheckout(); });
+    modal.querySelector('#checkoutCancel').addEventListener('click', closeCheckout);
+    modal.querySelector('#checkoutConfirm').addEventListener('click', () => {
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      cart = [];
+      updateCartUI();
+      closeCheckout();
+      closeCart();
+      showToast(`¡Pedido confirmado por $${total.toFixed(2)}! (demo)`);
+    });
+  }
+  modal.classList.add('open');
+  modal.querySelector('#checkoutConfirm').focus();
+}
+
+function closeCheckout() {
+  document.getElementById('checkoutModal')?.classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  closeCheckout();
+  closeCart();
+});
+
+/* ─── 05c. Menú móvil, favoritos y accesibilidad ─── */
+function enhanceNavbar() {
+  const nav = document.getElementById('navbar');
+  if (!nav || nav.dataset.enhanced) return;
+  nav.dataset.enhanced = 'true';
+
+  const links = nav.querySelector('.nav-links');
+  if (links) {
+    links.id = links.id || 'navLinks';
+    const toggle = document.createElement('button');
+    toggle.className = 'menu-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-label', 'Abrir menú');
+    toggle.setAttribute('aria-controls', links.id);
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '☰';
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      nav.classList.toggle('menu-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? '✕' : '☰';
+    });
+    nav.querySelector('.nav-actions')?.appendChild(toggle);
+  }
+
+  const labels = ['Abrir carrito', 'Favoritos', 'Mi cuenta'];
+  nav.querySelectorAll('.nav-icon').forEach((icon, i) => icon.setAttribute('aria-label', labels[i] || 'Acción'));
+}
+
+document.addEventListener('click', e => {
+  const checkout = e.target.closest('.checkout-btn');
+  if (checkout && checkout.id !== 'checkoutConfirm') {
+    openCheckout();
+    return;
+  }
+  const wish = e.target.closest('.wish-btn');
+  if (wish) {
+    const active = wish.classList.toggle('active');
+    wish.textContent = active ? '♥' : '♡';
+    wish.setAttribute('aria-pressed', String(active));
+    showToast(active ? 'Añadido a favoritos' : 'Quitado de favoritos');
+  }
+});
+
 /* ─── 06. Toast ─── */
 function showToast(message) {
   const toast = document.getElementById('toast');
@@ -250,6 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Cursor expand re-attach */
   attachCursorExpand();
+
+  /* Menú móvil y carrito guardado */
+  enhanceNavbar();
+  updateCartUI();
 
   /* Navbar scroll (para index con navbar inline) */
   const nav = document.getElementById('navbar');

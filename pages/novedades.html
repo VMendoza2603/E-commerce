@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NÓRD: tienda de moda y diseño atemporal. Proyecto web con HTML, CSS y JavaScript.">
+  <meta name="theme-color" content="#0e0e0e">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <title>NÓRD — Novedades</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../pages.css">
+  <link rel="stylesheet" href="../responsive.css">
 </head>
 <body data-page="novedades">
 
@@ -14,7 +18,7 @@
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb">
-    <a href="index.html">Inicio</a>
+    <a href="../index.html">Inicio</a>
     <span class="breadcrumb-sep">›</span>
     <span class="breadcrumb-current">Novedades</span>
   </div>
@@ -171,7 +175,7 @@
     </div>
   </footer>
 
-  <script src="main.js"></script>
+  <script src="../main.js"></script>
   <script>
     // Mostrar solo los 4 productos con badge "Nuevo"
     const newItems = products.filter(p => p.badge === 'Nuevo' || p.id <= 4);
